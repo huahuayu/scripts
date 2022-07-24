@@ -7,7 +7,7 @@ os() {
     case "$OSTYPE" in
     darwin*) echo "OSX" ;;
     linux*) echo "LINUX" ;;
-    *) echo "unknown: $OSTYPE", exit 1 ;;
+    *) echo "unknown os type", exit 1 ;;
     esac
 }
 
