@@ -19,18 +19,22 @@ has() {
 install() {
     software=$1
     if !(has $software); then
-        if [[ $(os) -eq OSX ]]; then
-            .$(dirname $0)/install-brew
+        if [[ $(os) == OSX ]]; then
+            bash $(cd $(dirname $0) && pwd)/install-brew
             brew install $software
             return 0
         fi
-        if [[ $(os) -eq LINUX ]]; then
-            if (has apt-get); then
-                sudo apt-get install $software -y
+        if [[ $(os) == LINUX ]]; then
+            if (has apt); then
+                sudo apt install $software -y
                 return 0
             fi
             if (has yum); then
                 sudo yum install $software -y
+                return 0
+            fi
+            if (has apk); then
+                sudo apk add $software -y
                 return 0
             fi
             if (has pacman); then

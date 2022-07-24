@@ -2,6 +2,12 @@
 set -o errexit
 set -o nounset
 set -o pipefail
+# tested in
+# - [] macos
+# - [x] ubuntu
+# - [] centos
+# - [] apline
+# - [] archlinux
 
-source $(dirname $0)/install.sh
+source $(cd $(dirname $0) && pwd)/install.sh
 install curl

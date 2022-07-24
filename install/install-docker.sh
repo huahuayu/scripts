@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+# tested in
+# - [] macos
+# - [x] ubuntu
+# - [] centos
+# - [] apline
+# - [] archlinux
+
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -19,12 +26,14 @@ has() {
 do_install() {
     if !(has docker); then
         if [[ $(os) = OSX ]]; then
-            .$(dirname $0)/install-brew
+            bash $(cd $(dirname $0) && pwd)/install-brew
             brew cask install docker
             return 0
         fi
         if [[ $(os) = LINUX ]]; then
-            .$(dirname $0)/install-curl
+            if !(has curl); then
+                bash $(cd $(dirname $0) && pwd)/install-curl
+            fi
             curl -s https://get.docker.com | bash
             return 0
         fi

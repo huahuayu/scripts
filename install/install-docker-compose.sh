@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+# tested in
+# - [] macos
+# - [x] ubuntu
+# - [] centos
+# - [] apline
+# - [] archlinux
+
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -17,14 +24,9 @@ has() {
 }
 
 do_install() {
-    if !(has docker); then
-        if [[ $(os) -eq OSX ]]; then
-            .$(dirname $0)/install-brew
-            brew cask install docker
-            return 0
-        fi
-        if [[ $(os) -eq LINUX ]]; then
-            .$(dirname $0)/install-wget
+    if !(has docker-compose); then
+        if [[ $(os) == LINUX ]]; then
+            bash $(cd $(dirname $0) && pwd)/install-wget.sh
             wget https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)
             sudo mv docker-compose-$(uname -s)-$(uname -m) /usr/local/bin/docker-compose
             sudo chmod -v +x /usr/local/bin/docker-compose

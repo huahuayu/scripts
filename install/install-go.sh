@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+# tested in
+# - [] macos
+# - [x] ubuntu
+# - [] centos
+# - [] apline
+# - [] archlinux
+
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -19,33 +26,51 @@ has() {
     return $?
 }
 
-.$(dirname $0)/install-wget
+if !(has wget); then
+    bash $(cd $(dirname $0) && pwd)/install-wget.sh
+fi
 
 do_install() {
     if !(has go); then
-        rm /tmp/go$VERSION.*.pkg
         if [[ $(os) = OSX ]]; then
-            if [[ $ARCH -eq "arm" ]]; then
-                wget -P /tmp https://go.dev/dl/go$VERSION.darwin-arm64.pkg
-            else
-                wget -P /tmp https://go.dev/dl/go$VERSION.darwin-amd64.pkg
+            if [[ $ARCH != arm ]]; then
+                ARCH=amd
             fi
-            cd /tmp && sudo installer -pkg go$VERSION.darwin-*.pkg -target /
+            wget -P /tmp https://go.dev/dl/go$VERSION.darwin-${ARCH}64.pkg
+            cd /tmp && sudo installer -pkg go$VERSION.darwin-${ARCH}64.pkg -target /
+            rm /tmp/go$VERSION.${ARCH}64.pkg
+            output
             return 0
         fi
-        if [[ $(os) -eq LINUX ]]; then
-            if [[ $ARCH -eq "aarch64" ]]; then
-                wget -P /tmp https://go.dev/dl/go$VERSION.linux-arm64.tar.gz
+        if [[ $(os) == LINUX ]]; then
+            if [[ $ARCH == aarch64 ]]; then
+                ARCH=arm
             else
-                wget -P /tmp https://go.dev/dl/go$VERSION.linux-amd64.tar.gz
+                ARCH=amd
             fi
-            sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go$VERSION.linux-*.tar.gz
+            wget -P /tmp https://go.dev/dl/go$VERSION.linux-${ARCH}64.tar.gz
+            sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go$VERSION.linux-${ARCH}64.tar.gz
+            rm /tmp/go$VERSION.linux-${ARCH}64.tar.gz
+            output
             return 0
         fi
+
         return 1
     fi
 }
 
-echo "add to PATH by: export PATH=$PATH:/usr/local/go/bin"
+output() {
+    echo "go $VERSION installed successfully, you need manually add to .*rc file:"
+    cat <<'EOF'
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
+export GOROOT=/usr/local/go
+export PATH=$PATH:$GOBIN:$GOROOT/bin
+export GO111MODULE=on
+export CGO_ENABLED=1
+export GOPROXY=https://goproxy.cn,direct
+EOF
+}
 
 do_install
