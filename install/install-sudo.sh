@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-# - [] macos
+# last update at: 2022-08-06
+# tested in
+# - [ ] macos
 # - [x] ubuntu
-# - [] centos
-# - [] apline
-# - [] archlinux
+# - [x] centos
+# - [ ] apline
+# - [ ] archlinux
 
 set -o errexit
 set -o nounset
@@ -28,7 +30,7 @@ do_install() {
         if [[ $(os) == LINUX ]]; then
             if (has apt); then
                 if [[ $USER == root ]]; then
-                    apt install sudo -y
+                    apt update && apt install sudo -y
                 else
                     echo "use root to execute..."
                     su root -c 'apt install sudo -y && usermod -aG sudo $USER'
@@ -37,7 +39,7 @@ do_install() {
             fi
             if (has yum); then
                 if [[ $USER == root ]]; then
-                    yum install sudo -y
+                    yum update && yum install sudo -y
                 else
                     echo "use root to execute..."
                     su root -c 'yum install sudo -y && usermod -aG sudo $USER'

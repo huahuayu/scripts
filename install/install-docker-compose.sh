@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# tested in
-# - [] macos
+# last updated: 2022-08-06
+# tested in:
+# - [ ] macos
 # - [x] ubuntu
-# - [] centos
-# - [] apline
-# - [] archlinux
+# - [x] centos
+# - [ ] apline
+# - [ ] archlinux
 
 set -o errexit
 set -o nounset
@@ -37,4 +38,5 @@ do_install() {
     fi
 }
 
+bash $(cd $(dirname $0) && pwd)/install-docker.sh
 do_install

@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# last updated: 2022-08-06
+# tested in:
+# - [x] macos
+
 set -o errexit
 set -o nounset
 set -o pipefail

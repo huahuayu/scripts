@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# last update at: 2022-08-05
+# last update at: 2022-08-06
 # tested in
 # - [x] macos
 # - [x] ubuntu
-# - [] centos
-# - [] apline
-# - [] archlinux
+# - [x] centos
+# - [ ] apline
+# - [ ] archlinux
 
 set -o errexit
 set -o nounset

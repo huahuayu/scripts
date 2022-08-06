@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
+# last update at: 2022-08-06
 # tested in
-# - [] macos
+# - [x] macos
 # - [x] ubuntu
-# - [] centos
-# - [] apline
-# - [] archlinux
+# - [x] centos
+# - [ ] apline
+# - [ ] archlinux
 
 set -o errexit
 set -o pipefail
 
 bash $(cd $(dirname $0) && pwd)/install-zsh.sh
+bash $(cd $(dirname $0) && pwd)/install-git.sh
 if [[ -d $HOME/.oh-my-zsh ]]; then
     exit 0
 fi
