@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# last updated: 2022-08-06
+# last updated: 2022-09-01
 # tested in:
 # - [ ] macos
 # - [x] ubuntu
@@ -27,7 +27,7 @@ has() {
 install() {
     if !(has dig); then
         if [[ $(os) == OSX ]]; then
-            bash $(cd $(dirname $0) && pwd)/install-brew
+            bash $(cd $(dirname $0) && pwd)/install-brew.sh
             brew install dig
             return 0
         fi
