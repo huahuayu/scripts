@@ -1,0 +1,5 @@
+version: "3.3"
+services:
+  alpine:
+    container_name: alpine
+    image: "arm64v8/alpine:latest"
