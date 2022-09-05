@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# last updated: 2022-08-06
+# last updated: 2022-09-01
 # tested in:
 # - [ ] macos
 # - [x] ubuntu
